@@ -8,7 +8,7 @@ import '../widgets/widgets.dart';
 import '../bloc/auth_bloc.dart';
 import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
-import '../../../home/presentation/pages/home_page.dart';
+import 'home_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -155,12 +155,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 ],
               ),
             ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
+          ],
+        ),
+      ),
     );
   }
 
@@ -380,8 +377,11 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ],
           ),
-        ],
-      ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 

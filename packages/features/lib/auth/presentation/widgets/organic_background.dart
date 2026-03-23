@@ -16,7 +16,7 @@ class OrganicBackground extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.4,
             height: MediaQuery.of(context).size.height * 0.4,
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.05),
+              color: AppColors.primary.withValues(alpha: 0.05),
               shape: BoxShape.circle,
             ),
             child: BackdropFilter(
@@ -34,7 +34,7 @@ class OrganicBackground extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.3,
             height: MediaQuery.of(context).size.height * 0.3,
             decoration: BoxDecoration(
-              color: AppColors.tertiary.withOpacity(0.05),
+              color: AppColors.tertiary.withValues(alpha: 0.05),
               shape: BoxShape.circle,
             ),
             child: BackdropFilter(

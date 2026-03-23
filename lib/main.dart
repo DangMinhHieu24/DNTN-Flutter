@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:core/theme/app_theme.dart';
 import 'package:features/auth/presentation/pages/login_page.dart';
 import 'package:features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:features/core/di/injection_container.dart';
+import 'di/injection_container.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

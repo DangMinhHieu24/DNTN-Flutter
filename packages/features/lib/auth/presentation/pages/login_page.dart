@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:core/theme/app_colors.dart';
 import 'package:core/theme/app_text_styles.dart';
 import 'package:core/widgets/widgets.dart';
 import '../widgets/widgets.dart';
+import '../bloc/auth_bloc.dart';
+import '../bloc/auth_event.dart';
+import '../bloc/auth_state.dart';
+import 'home_page.dart';
 import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -16,7 +21,6 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
-  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -26,12 +30,22 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _handleLogin() {
-    setState(() => _isLoading = true);
-    Future.delayed(const Duration(seconds: 2), () {
-      if (mounted) {
-        setState(() => _isLoading = false);
-      }
-    });
+    final input = _emailController.text.trim();
+    final password = _passwordController.text;
+
+    if (input.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Email hoặc số điện thoại và mật khẩu không được để trống')),
+      );
+      return;
+    }
+
+    context.read<AuthBloc>().add(
+          LoginRequested(
+            phone: input,
+            password: password,
+          ),
+        );
   }
 
   @override
@@ -39,47 +53,72 @@ class _LoginPageState extends State<LoginPage> {
     final size = MediaQuery.of(context).size;
     final isDesktop = size.width >= 1024;
 
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      body: Stack(
-        children: [
-          const OrganicBackground(),
-          SafeArea(
-            child: Column(
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state is AuthSuccess) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (_) => const HomePage()),
+          );
+        } else if (state is AuthError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+              backgroundColor: AppColors.error,
+            ),
+          );
+        }
+      },
+      child: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, state) {
+          final isLoading = state is AuthLoading;
+
+          return Scaffold(
+            backgroundColor: AppColors.background,
+            body: Stack(
               children: [
-                Expanded(
-                  child: Center(
-                    child: SingleChildScrollView(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: isDesktop ? 64 : 24,
-                        vertical: 40,
+                const OrganicBackground(),
+                SafeArea(
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Center(
+                          child: SingleChildScrollView(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: isDesktop ? 64 : 24,
+                              vertical: 40,
+                            ),
+                            child: ConstrainedBox(
+                              constraints: const BoxConstraints(maxWidth: 1100),
+                              child: isDesktop
+                                  ? Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        const Expanded(flex: 12, child: BrandingSection()),
+                                        const Spacer(flex: 2),
+                                        Expanded(
+                                          flex: 10,
+                                          child: _buildLoginForm(context, isLoading),
+                                        ),
+                                      ],
+                                    )
+                                  : _buildLoginForm(context, isLoading),
+                            ),
+                          ),
+                        ),
                       ),
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 1100),
-                        child: isDesktop
-                            ? Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Expanded(flex: 12, child: BrandingSection()),
-                                  const Spacer(flex: 2),
-                                  Expanded(flex: 10, child: _buildLoginForm(context)),
-                                ],
-                              )
-                            : _buildLoginForm(context),
-                      ),
-                    ),
+                      _buildFooter(context, isDesktop),
+                    ],
                   ),
                 ),
-                _buildFooter(context, isDesktop),
               ],
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
 
-  Widget _buildLoginForm(BuildContext context) {
+  Widget _buildLoginForm(BuildContext context, bool isLoading) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 48),
       decoration: BoxDecoration(
@@ -180,8 +219,8 @@ class _LoginPageState extends State<LoginPage> {
           const SizedBox(height: 40),
           GradientButton(
             text: 'Đăng nhập',
-            onPressed: _handleLogin,
-            isLoading: _isLoading,
+            onPressed: isLoading ? () {} : _handleLogin,
+            isLoading: isLoading,
           ),
           const SizedBox(height: 32),
           Row(

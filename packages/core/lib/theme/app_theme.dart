@@ -29,7 +29,7 @@ class AppTheme {
       // Input Decoration Theme
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: AppColors.onSurface.withOpacity(0.05),
+        fillColor: AppColors.onSurface.withValues(alpha: 0.05),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: AppDimensions.inputPaddingHorizontal,
           vertical: AppDimensions.inputPaddingVertical,
@@ -44,10 +44,10 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppDimensions.inputBorderRadius),
-          borderSide: BorderSide(color: AppColors.primary.withOpacity(0.2), width: 1),
+          borderSide: BorderSide(color: AppColors.primary.withValues(alpha: 0.2), width: 1),
         ),
-        prefixIconColor: AppColors.onSurfaceVariant.withOpacity(0.4),
-        suffixIconColor: AppColors.onSurfaceVariant.withOpacity(0.4),
+        prefixIconColor: AppColors.onSurfaceVariant.withValues(alpha: 0.4),
+        suffixIconColor: AppColors.onSurfaceVariant.withValues(alpha: 0.4),
       ),
 
       textTheme: const TextTheme(
