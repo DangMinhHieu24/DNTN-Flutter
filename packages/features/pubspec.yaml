@@ -1,0 +1,21 @@
+name: features
+description: Features module for App_HocTap
+version: 0.0.1
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # Phụ thuộc vào module core
+  core:
+    path: ../core
+  # Thư viện cho giao diện và state
+  flutter_bloc: ^8.1.3
+  dartz: ^0.10.1
+  get_it: ^7.6.4
+  equatable: ^2.0.5
+  # Form validation (nếu cần)
+  formz: ^0.7.0

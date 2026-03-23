@@ -1,0 +1,17 @@
+name: core
+description: Core module for App_HocTap
+version: 0.0.1
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # Các thư viện cốt lõi cho Clean Architecture
+  dartz: ^0.10.1
+  get_it: ^7.6.4
+  equatable: ^2.0.5
+  dio: ^5.4.0 # Cho gọi API
+  shared_preferences: ^2.2.2 # Cho lưu local
