@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:core/theme/app_colors.dart';
 import 'package:core/theme/app_text_styles.dart';
 import 'package:core/theme/app_dimensions.dart';
@@ -8,7 +9,6 @@ import '../widgets/widgets.dart';
 import '../bloc/auth_bloc.dart';
 import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
-import 'home_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -98,10 +98,8 @@ class _RegisterPageState extends State<RegisterPage> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthSuccess) {
-          // Navigate to Home page
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) => const HomePage()),
-          );
+          // Dùng go_router để navigate
+          context.go('/home');
         } else if (state is AuthError) {
           // Show error message
           ScaffoldMessenger.of(context).showSnackBar(
@@ -215,7 +213,7 @@ class _RegisterPageState extends State<RegisterPage> {
               MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
-                  onTap: () => Navigator.pop(context),
+                  onTap: () => context.pop(),
                   child: const Icon(
                     Icons.close_rounded,
                     color: AppColors.onSurfaceVariant,
@@ -365,7 +363,7 @@ class _RegisterPageState extends State<RegisterPage> {
               MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
-                  onTap: () => Navigator.pop(context),
+                  onTap: () => context.pop(),
                   child: Text(
                     'Đăng nhập ngay',
                     style: AppTextStyles.bodySmall.copyWith(

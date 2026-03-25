@@ -17,5 +17,7 @@ dependencies:
   dartz: ^0.10.1
   get_it: ^7.6.4
   equatable: ^2.0.5
+  shared_preferences: ^2.2.2
+  go_router: ^14.0.0
   # Form validation (nếu cần)
   formz: ^0.7.0

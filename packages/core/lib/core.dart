@@ -1,6 +1,22 @@
 // Barrel file — export toàn bộ core package
 library core;
 
+// Error handling
+export 'error/exceptions.dart';
+export 'error/failures.dart';
+
+// Network
+export 'network/network.dart';
+
+// Theme
+export 'theme/app_theme.dart';
+
+// Use cases
+export 'usecases/usecase.dart';
+
+// Widgets
+export 'widgets/widgets.dart';
+
 // Theme
 export 'theme/app_colors.dart';
 export 'theme/app_dimensions.dart';
